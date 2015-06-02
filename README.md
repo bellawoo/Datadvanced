@@ -1,28 +1,42 @@
-This folder structure should be suitable for starting a project that uses a database:
+# Datadvanced
 
-* Clone the repo
-* `rake generate:migration <Name>` to create a migration
-* `rake db:migrate` to run it
-* Create models
-* ... ?
-* Profit
+## Normal Mode
+How many users are there?
+```User.count```
 
-You may need to fiddle around with remotes assuming that you don't want to push to this one (which you probably don't).
+What are the 5 most expensive items?
+```Item.order(price: :desc).limit(5)```
 
-## Rundown
+What's the cheapest electronics item?
+```Item.where("category Like '%Electronics'").order(price: :asc).limit(1)```
 
-```
-.
-├── Gemfile             # Details which gems are required by the project
-├── README.md           # This file
-├── Rakefile            # Defines `rake generate:migration` and `db:migrate`
-├── config
-│   └── database.yml    # Defines the database config (e.g. name of file)
-├── console.rb          # `ruby console.rb` starts `pry` with models loaded
-├── db
-│   ├── dev.sqlite3     # Default location of the database file
-│   ├── migrate         # Folder containing generated migrations
-│   └── setup.rb        # `require`ing this file sets up the db connection
-└── lib                 # Your ruby code (models, etc.) should go here
-    └── all.rb          # Require this file to auto-require _all_ `.rb` files in `lib`
-```
+Who lives at "489 Fritsch Island"? Do they have another address?
+To find who lives at the specific address
+```user_id_for_Fritsch_Island = Address.where(street: '489 Fritsch Island').pluck(:user_id)
+User.find(user_id_for_Fritsch_Island)```
+
+To find all of his addresses
+```Address.where(user_id: 35)```
+
+Correct Tevin Mitchell's New York zip code to 10108.
+```Tevin_id = User.where(first_name: 'Tevin', last_name: 'Mitchell').pluck(:id)
+Tevin_zip = Address.where(user_id: Tevin_id, state: 'New York').pluck(:zip) #92202
+Tevin = Address.find_by(zip: Tevin_zip)
+Tevin.zip = 10108
+Tevin.save
+Tevin```
+
+How much would it cost to buy one of each piece of jewelery?
+
+How many total items did we sell?
+
+How much was spent on health?
+
+Simulate buying an item by inserting a User for yourself and an Order for that User (do not include this in the figures above).
+
+
+## Hard Mode
+What item was ordered most often? Grossed the most money?
+What user spent the most?
+What were the top 3 highest grossing categories?
+Which item was never ordered?
