@@ -27,10 +27,23 @@ Tevin.save
 Tevin```
 
 How much would it cost to buy one of each piece of jewelery?
+Item.where("category LIKE '%Jewelery%'").sum(:price)
 
 How many total items did we sell?
+Order.sum(:quantity)
 
 How much was spent on health?
+I had trouble figuring out how to do calculations with values from two different tables. With joins, it returns a single list rather than a fused table where we can write functions that references the different tables. Below is what I was last working on.
+
+```orders = Order.pluck(:item_id, :quantity)
+prices = Item.where("category LIKE '%Health%'").pluck(:id, :price)
+sales = []
+orders.each do |x, y|
+# Iterate through every array in the orders array and match the array element at [0] with the arrays within the prices array at [0].
+# If positive match, push both quantity and price into a third array.
+# Write another function that would then multiply those two together.
+# Push results out into a fourth array and then sum up each element with another function.
+end```
 
 Simulate buying an item by inserting a User for yourself and an Order for that User (do not include this in the figures above).
 
