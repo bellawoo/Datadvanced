@@ -1,6 +1,3 @@
-require './db/setup'
-require './lib/all'
-
 # How many users are there?
 User.count
 
@@ -32,20 +29,26 @@ Item.where("category LIKE '%Jewelery%'").sum(:price)
 Order.sum(:quantity)
 
 # How much was spent on health?
-health_id_and_price = Item.where("category LIKE '%Health%'").pluck(:id, :price)
-orders_under_health = Order.find_by(health_id_and_price)
-sum(Item.price * Order.quantity)
- 
-
-orders = Order.pluck(:item_id, :quantity)
-prices = Item.where("category LIKE '%Health%'").pluck(:id, :price)
-sales = []
-orders.each do |x, y|
-# Iterate through every array in the orders array and match the array element at [0] with the arrays within the prices array at [0].
-# If positive match, push both quantity and price into a third array.
-# Write another function that would then multiply those two together.
-# Push results out into a fourth array and then sum up each element with another function.
+# Within Item class, define gross
+def gross
+	order_quantity = Order.where(item_id: id).sum(:quantity)
+	(order_quantity * price).to_f
 end
+
+Item.where("category LIKE '%Health%'").each do |x|
+	total += i.gross
+end
+
+# But this is not ideal. We can also define gross_from_category in the Order class.
+def self.gross_from_category cat_name
+	gross = 0
+	items = Item.where("category LIKE '%?%'", cat_name)
+	items.each do |y|
+		gross += i.gross
+	end
+	return gross
+end
+
 
 # Simulate buying an item by inserting a User for yourself and an Order for that User (do not include this in the figures above).
 #   INSERT INTO users VALUES (null, 'Bella', 'Woo', 'woo.bella@gmail.com');
