@@ -1,7 +1,7 @@
 require 'httparty'
 require 'xml'
 
-class WmataAPI
+class BikeAPI
   include HTTParty
   base_url 'https://www.capitalbikeshare.com/data/stations/bikeStations.xml'
   

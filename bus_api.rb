@@ -1,7 +1,7 @@
 require 'httparty'
 require 'json'
 
-class WmataAPI
+class BusAPI
   include HTTParty
   base_url 'https://api.wmata.com/NextBusService.svc/json/jPredictions'
   

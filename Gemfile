@@ -9,6 +9,7 @@ gem 'tilt'
 gem 'erubis'
 gem 'sinatra'
 gem 'httparty'
+gem 'haversine'
 
 group :development do
   gem 'sqlite3'
