@@ -4,3 +4,16 @@ gem 'activerecord'
 gem 'pry'
 gem 'sqlite3'
 gem 'minitest'
+gem 'rack-test'
+gem 'tilt'
+gem 'erubis'
+gem 'sinatra'
+gem 'httparty'
+
+group :development do
+  gem 'sqlite3'
+end
+
+group :production do
+  gem 'pg'
+end
